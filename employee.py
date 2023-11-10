@@ -2,30 +2,85 @@
 """ENTER YOUR SOLUTION HERE!"""
 
 class Employee:
-    def __init__(self, name):
+    def __init__(self, name, contract, commission=None):
         self.name = name
+        self.contract = contract
+        self.commission = commission
 
     def get_pay(self):
+        return self.contract.calculate_pay() + (self.commission.calculate_pay() if self.commission else 0)
+
+    def __str__(self):
+        return f"{self.name} works on a {self.contract} and receives a {self.commission}. Their total pay is {self.get_pay()}."
+
+class Contract:
+    def calculate_pay(self):
         pass
 
     def __str__(self):
-        return self.name
+        pass
 
+class SalaryContract(Contract):
+    def __init__(self, salary):
+        self.salary = salary
 
-# Billie works on a monthly salary of 4000.  Their total pay is 4000.
-billie = Employee('Billie')
+    def calculate_pay(self):
+        return self.salary
 
-# Charlie works on a contract of 100 hours at 25/hour.  Their total pay is 2500.
-charlie = Employee('Charlie')
+    def __str__(self):
+        return f"monthly salary of {self.salary}"
 
-# Renee works on a monthly salary of 3000 and receives a commission for 4 contract(s) at 200/contract.  Their total pay is 3800.
-renee = Employee('Renee')
+class HourlyContract(Contract):
+    def __init__(self, hours_worked, hourly_rate):
+        self.hours_worked = hours_worked
+        self.hourly_rate = hourly_rate
 
-# Jan works on a contract of 150 hours at 25/hour and receives a commission for 3 contract(s) at 220/contract.  Their total pay is 4410.
-jan = Employee('Jan')
+    def calculate_pay(self):
+        return self.hours_worked * self.hourly_rate
 
-# Robbie works on a monthly salary of 2000 and receives a bonus commission of 1500.  Their total pay is 3500.
-robbie = Employee('Robbie')
+    def __str__(self):
+        return f"contract of {self.hours_worked} hours at {self.hourly_rate}/hour"
 
-# Ariel works on a contract of 120 hours at 30/hour and receives a bonus commission of 600.  Their total pay is 4200.
-ariel = Employee('Ariel')
+class Commission:
+    def calculate_pay(self):
+        pass
+
+    def __str__(self):
+        pass
+
+class BonusCommission(Commission):
+    def __init__(self, bonus):
+        self.bonus = bonus
+
+    def calculate_pay(self):
+        return self.bonus
+
+    def __str__(self):
+        return f"bonus commission of {self.bonus}"
+
+class ContractCommission(Commission):
+    def __init__(self, contracts_landed, commission_per_contract):
+        self.contracts_landed = contracts_landed
+        self.commission_per_contract = commission_per_contract
+
+    def calculate_pay(self):
+        return self.contracts_landed * self.commission_per_contract
+
+    def __str__(self):
+        return f"commission for {self.contracts_landed} contract(s) at {self.commission_per_contract}/contract"
+
+# Create instances of Employee with appropriate contracts and commissions
+billie = Employee('Billie', SalaryContract(4000))
+charlie = Employee('Charlie', HourlyContract(100, 25))
+renee = Employee('Renee', SalaryContract(3000), ContractCommission(4, 200))
+jan = Employee('Jan', HourlyContract(150, 25), ContractCommission(3, 220))
+robbie = Employee('Robbie', SalaryContract(2000), BonusCommission(1500))
+ariel = Employee('Ariel', HourlyContract(120, 30), BonusCommission(600))
+
+# Testing the string representation for each employee
+print(robbie.get_pay())
+print(str(charlie))
+print(str(renee))
+print(str(jan))
+print(str(robbie))
+print(str(ariel))
