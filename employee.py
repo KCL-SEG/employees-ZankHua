@@ -9,9 +9,11 @@ class Employee:
 
     def get_pay(self):
         return self.contract.calculate_pay() + (self.commission.calculate_pay() if self.commission else 0)
-
+    
     def __str__(self):
-        return f"{self.name} works on a {self.contract} and receives a {self.commission}. Their total pay is {self.get_pay()}."
+        contract_str = str(self.contract)
+        commission_str = f" and receives a {self.commission}" if self.commission else ''
+        return f"{self.name} works on a {contract_str}{commission_str}. Their total pay is {self.get_pay()}."
 
 class Contract:
     def calculate_pay(self):
