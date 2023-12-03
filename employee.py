@@ -69,3 +69,11 @@ class ContractCommission(Commission):
     def __str__(self):
         return f"commission for {self.contracts_landed} contract(s) at {self.commission_per_contract}/contract"
 
+# Creating employee instances
+billie = Employee("Billie", SalaryContract(4000))
+charlie = Employee("Charlie", HourlyContract(100, 25))
+renee = Employee("Renee", SalaryContract(3000), ContractCommission(4, 200))
+jan = Employee("Jan", HourlyContract(150, 25), ContractCommission(3, 220))
+robbie = Employee("Robbie", SalaryContract(2000), BonusCommission(1500))
+ariel = Employee("Ariel", HourlyContract(120, 30), BonusCommission(600))
+
